@@ -86,7 +86,7 @@
     border:4px solid #fff;box-shadow:0 20px 40px -12px rgba(18,20,28,0.25);
   }
 
-  /* PIXEL AVATAR — animated transparent WebP/GIF inside the same circular hero area */
+  /* PIXEL AVATAR — straight-line intro animation, then still image */
   .pixel-avatar-stage{
     width:168px;
     height:168px;
@@ -99,11 +99,7 @@
     align-items:center;
     justify-content:center;
   }
-  .pixel-avatar-stage picture{
-    width:100%;
-    height:100%;
-    display:block;
-  }
+
   .pixel-avatar{
     width:100%;
     height:100%;
@@ -295,10 +291,13 @@
 
     <div class="headshot-wrap">
       <div class="pixel-avatar-stage">
-        <picture>
-          <source srcset="pixel-avatar.webp" type="image/webp">
-          <img src="pixel-avatar.gif" alt="Pixel avatar of Jyoshna waving hello" class="pixel-avatar">
-        </picture>
+        <img
+          id="pixelAvatar"
+          src="pixel-avatar-straight-slower.gif"
+          alt="Pixel avatar of Jyoshna walking in, saying hi, and staying on screen"
+          class="pixel-avatar"
+          onerror="this.outerHTML='&lt;div class=&quot;headshot-fallback&quot;&gt;JN&lt;/div&gt;'"
+        >
       </div>
     </div>
 
@@ -699,6 +698,17 @@ LIMIT  1;`;
     entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('show'); });
   }, {threshold:0.15});
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Pixel avatar:
+  // Plays the slower straight-line GIF first, then replaces it with a clear still image.
+  const pixelAvatar = document.getElementById('pixelAvatar');
+
+  if (pixelAvatar) {
+    setTimeout(() => {
+      pixelAvatar.src = 'pixel-avatar-straight-still.png';
+    }, 5200);
+  }
+
 </script>
 
 </body>
