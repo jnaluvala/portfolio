@@ -100,7 +100,7 @@
     justify-content:center;
   }
 
-  ./* Base avatar style */
+  /* Base avatar style */
   .pixel-avatar{
     display:block;
     object-fit:contain;
@@ -114,10 +114,10 @@
     height:220px;
   }
 
-  /* Hair-flip GIF dimensions */
+  /* Hair-flip GIF dimensions — same visual size as the walking GIF */
   .pixel-avatar-hairflip{
-    width:168px;
-    height:168px;
+    width:220px;
+    height:220px;
   }
 
   .cta-pill{
@@ -302,7 +302,7 @@
     <h1 class="name">Data Analyst</h1>
 
     <div class="headshot-wrap">
-      <div class="-avatar-stage">
+      <div class="pixel-avatar-stage">
         <img
           id="pixelAvatar"
           src="pixel-avatar.gif"
@@ -712,8 +712,12 @@ LIMIT  1;`;
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
   // Pixel avatar:
-  // Plays the slower straight-line GIF first, then replaces it with a clear still image.
+  // Plays the walking GIF first, then replaces it with the transparent hair-flip GIF.
   const pixelAvatar = document.getElementById('pixelAvatar');
+
+  // Preload the hair-flip GIF so the change is smooth.
+  const hairFlipAvatar = new Image();
+  hairFlipAvatar.src = 'hair-flip-avatar-transparent.gif';
 
   if (pixelAvatar) {
     setTimeout(() => {
