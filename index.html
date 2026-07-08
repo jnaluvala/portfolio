@@ -100,12 +100,24 @@
     justify-content:center;
   }
 
+  ./* Base avatar style */
   .pixel-avatar{
-    width:100%;
-    height:100%;
     display:block;
     object-fit:contain;
     image-rendering:pixelated;
+    flex-shrink:0;
+  }
+
+/* Walking GIF dimensions — make this visually match the hair-flip GIF */
+  .pixel-avatar-walking{
+    width:220px;
+    height:220px;
+  }
+
+  /* Hair-flip GIF dimensions */
+  .pixel-avatar-hairflip{
+    width:168px;
+    height:168px;
   }
 
   .cta-pill{
@@ -294,8 +306,8 @@
         <img
           id="pixelAvatar"
           src="pixel-avatar.gif"
-          alt="Pixel avatar of Jyoshna walking in, saying hi, and staying on screen"
-          class="pixel-avatar"
+          alt="Pixel avatar of Jyoshna walking in and then doing a hair flip"
+          class="pixel-avatar pixel-avatar-walking"
           onerror="this.outerHTML='&lt;div class=&quot;headshot-fallback&quot;&gt;JN&lt;/div&gt;'"
         >
       </div>
@@ -706,6 +718,8 @@ LIMIT  1;`;
   if (pixelAvatar) {
     setTimeout(() => {
       pixelAvatar.src = 'hair-flip-avatar-transparent.gif';
+      pixelAvatar.classList.remove('pixel-avatar-walking');
+      pixelAvatar.classList.add('pixel-avatar-hairflip');
     }, 5200);
   }
 
