@@ -79,7 +79,7 @@
     position:relative;
     z-index:1;
     max-width:900px;
-    margin:0 auto 30px;
+    margin:-8px auto 30px;
     overflow:hidden;
     white-space:nowrap;
     background:transparent;
@@ -93,13 +93,13 @@
     width:max-content;
     gap:55px;
     padding:2px 0;
-    animation:heroTicker 44s linear infinite;
+    animation:heroTicker 42s linear infinite;
     will-change:transform;
   }
 
   .hero-value-track span{
     display:inline-block;
-    font-family:var(--font-body);
+    font-family:"Playfair Display", Georgia, serif;
     font-size:clamp(1rem, 2vw, 1.12rem);
     font-weight:500;
     letter-spacing:0.01em;
@@ -142,7 +142,7 @@
 
 @keyframes heroTicker{
   0%{
-    transform:translateX(100%);
+    transform:translateX(35%);
   }
   100%{
     transform:translateX(-100%);
