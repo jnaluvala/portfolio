@@ -91,7 +91,7 @@
     display:flex;
     align-items:center;
     width:max-content;
-    gap:64px;
+    gap:55px;
     padding:2px 0;
     animation:heroTicker 44s linear infinite;
     will-change:transform;
@@ -115,10 +115,39 @@
     animation-play-state:paused;
   }
 
-  @keyframes heroTicker{
-    from{transform:translateX(0);}
-    to{transform:translateX(calc(-50% - 32px));}
+  .hero-value-ticker{
+  position:relative;
+  z-index:1;
+  max-width:850px;
+  margin:-10px auto 28px;
+  overflow:hidden;
+  white-space:nowrap;
+}
+
+.hero-value-track{
+  display:inline-flex;
+  width:max-content;
+  gap:44px;
+  animation:heroTicker 60s linear infinite;
+  font-family:var(--font-display);
+  font-size:clamp(1rem, 2vw, 1.18rem);
+  font-weight:500;
+  color:var(--text-dim);
+}
+
+.hero-value-track strong{
+  color:var(--text);
+  font-weight:700;
+}
+
+@keyframes heroTicker{
+  0%{
+    transform:translateX(100%);
   }
+  100%{
+    transform:translateX(-100%);
+  }
+}
 
   @media (prefers-reduced-motion: reduce){
     .hero-value-track{
