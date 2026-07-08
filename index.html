@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jyoshna Naluvala — Data Analyst</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#F7F8FB;
@@ -76,6 +76,118 @@
     font-family:var(--font-display);font-weight:700;
     font-size:clamp(2.4rem, 6vw, 3.8rem);
     letter-spacing:-0.02em;margin-bottom:12px;position:relative;z-index:1;
+  }
+
+  /* HERO TITLE — D + A collide, then reveal Data Analyst */
+  .role-collision-title{
+    display:grid;
+    place-items:center;
+    min-height:1.15em;
+    overflow:visible;
+  }
+
+  .collision-stage{
+    position:absolute;
+    inset:0;
+    display:grid;
+    place-items:center;
+    pointer-events:none;
+    animation:hideCollisionStage .2s ease forwards 2.35s;
+  }
+
+  .collision-letter{
+    position:absolute;
+    font-family:var(--font-display);
+    font-size:clamp(3rem, 7vw, 4.8rem);
+    font-weight:700;
+    line-height:1;
+    color:var(--text);
+    text-shadow:0 18px 45px rgba(18,20,28,0.16);
+  }
+
+  .collision-d{
+    transform:translateX(-42vw) rotate(-8deg);
+    animation:dCollide 2.35s cubic-bezier(.2,.8,.2,1) forwards;
+  }
+
+  .collision-a{
+    transform:translateX(42vw) rotate(8deg);
+    animation:aCollide 2.35s cubic-bezier(.2,.8,.2,1) forwards;
+  }
+
+  .collision-spark{
+    position:absolute;
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    background:rgba(13,148,136,0.38);
+    box-shadow:0 0 34px rgba(13,148,136,0.45);
+    opacity:0;
+    animation:collisionSpark 2.35s ease forwards;
+  }
+
+  .final-role{
+    opacity:0;
+    transform:scale(.9);
+    filter:blur(10px);
+    animation:showFinalRole .8s ease forwards 2.05s;
+  }
+
+  @keyframes dCollide{
+    0%{opacity:0;transform:translateX(-42vw) rotate(-8deg);}
+    16%{opacity:1;}
+    66%{transform:translateX(-.5em) rotate(-2deg);}
+    78%{transform:translateX(-.08em) rotate(0deg) scale(1.06);}
+    100%{opacity:0;transform:translateX(0) rotate(0deg) scale(.35);}
+  }
+
+  @keyframes aCollide{
+    0%{opacity:0;transform:translateX(42vw) rotate(8deg);}
+    16%{opacity:1;}
+    66%{transform:translateX(.5em) rotate(2deg);}
+    78%{transform:translateX(.08em) rotate(0deg) scale(1.06);}
+    100%{opacity:0;transform:translateX(0) rotate(0deg) scale(.35);}
+  }
+
+  @keyframes collisionSpark{
+    0%,62%{
+      opacity:0;
+      transform:scale(.2);
+      box-shadow:0 0 0 0 rgba(13,148,136,0.35);
+    }
+    76%{
+      opacity:1;
+      transform:scale(1);
+      box-shadow:0 0 0 18px rgba(13,148,136,0.08);
+    }
+    100%{
+      opacity:0;
+      transform:scale(2.3);
+      box-shadow:0 0 0 44px rgba(13,148,136,0);
+    }
+  }
+
+  @keyframes showFinalRole{
+    0%{opacity:0;transform:scale(.9);filter:blur(10px);}
+    100%{opacity:1;transform:scale(1);filter:blur(0);}
+  }
+
+  @keyframes hideCollisionStage{
+    to{opacity:0;visibility:hidden;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .collision-stage{
+      display:none;
+      animation:none;
+    }
+
+    .final-role{
+      opacity:1;
+      transform:none;
+      filter:none;
+      animation:none;
+    }
   }
 
   /* HERO VALUE TICKER — slow, clean, no box */
@@ -554,7 +666,14 @@
   <div class="wrap">
     <div class="hero-mark">JN</div>
     <div class="hero-greet">Hey, I'm Jyoshna 👋</div>
-    <h1 class="name">Data Analyst</h1>
+    <h1 class="name role-collision-title" aria-label="Data Analyst">
+      <span class="collision-stage" aria-hidden="true">
+        <span class="collision-letter collision-d">D</span>
+        <span class="collision-letter collision-a">A</span>
+        <span class="collision-spark"></span>
+      </span>
+      <span class="final-role" aria-hidden="true">Data Analyst</span>
+    </h1>
     <div class="hero-value-ticker" aria-label="I help stakeholders move from confusion to clarity by showing what changed, why it matters, and what to do next.">
       <div class="hero-value-track">
         <span>I help stakeholders move from confusion to clarity by showing <strong>what changed</strong>, why it matters, and what to do next.</span>
