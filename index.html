@@ -108,10 +108,10 @@
     flex-shrink:0;
   }
 
-/* Walking GIF dimensions — make this visually match the hair-flip GIF */
+/* Walking GIF dimensions — same visual size as the hair-flip GIF */
   .pixel-avatar-walking{
-    width:200px;
-    height:200px;
+    width:220px;
+    height:220px;
   }
 
   /* Hair-flip GIF dimensions — same visual size as the walking GIF */
@@ -132,6 +132,169 @@
     display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .2s ease;
   }
   .cta-pill:hover .arrow{transform:translateX(2px);}
+
+  /* RESUME QUERY MODAL */
+  .resume-query-btn{
+    border:none;
+    cursor:pointer;
+    font-family:var(--font-body);
+  }
+
+  .resume-modal{
+    position:fixed;
+    inset:0;
+    z-index:999;
+    background:rgba(18,20,28,0.45);
+    backdrop-filter:blur(10px);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+  }
+
+  .resume-modal.show{
+    display:flex;
+  }
+
+  .resume-modal-card{
+    width:min(920px, 96vw);
+    height:min(760px, 90vh);
+    background:#fff;
+    border:1px solid var(--border-strong);
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 30px 80px rgba(18,20,28,0.28);
+    display:flex;
+    flex-direction:column;
+  }
+
+  .resume-modal-topbar{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:12px 16px;
+    background:var(--bg-soft);
+    border-bottom:1px solid var(--border);
+  }
+
+  .modal-dots{
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+
+  .resume-modal-title{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--text-dim);
+    flex:1;
+  }
+
+  .resume-modal-close{
+    width:32px;
+    height:32px;
+    border:none;
+    border-radius:50%;
+    background:#fff;
+    color:var(--text-dim);
+    font-size:22px;
+    cursor:pointer;
+    line-height:1;
+  }
+
+  .resume-modal-close:hover{
+    color:var(--coral);
+  }
+
+  .resume-modal-body{
+    padding:20px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    min-height:0;
+    flex:1;
+  }
+
+  .resume-terminal{
+    font-family:var(--font-mono);
+    font-size:13px;
+    line-height:1.8;
+    background:#FAFBFD;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:16px;
+    color:var(--text);
+    min-height:118px;
+    white-space:pre-wrap;
+    text-align:left;
+  }
+
+  .resume-status{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--teal);
+    opacity:0;
+    transform:translateY(4px);
+    transition:opacity .3s ease, transform .3s ease;
+    text-align:left;
+  }
+
+  .resume-status.show{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  .resume-frame-wrap{
+    flex:1;
+    min-height:0;
+    border:1px solid var(--border);
+    border-radius:12px;
+    overflow:hidden;
+    display:none;
+    background:#fff;
+  }
+
+  .resume-frame-wrap.show{
+    display:block;
+  }
+
+  .resume-frame-wrap iframe{
+    width:100%;
+    height:100%;
+    border:0;
+  }
+
+  .resume-modal-actions{
+    display:flex;
+    justify-content:flex-end;
+  }
+
+  .resume-open-btn{
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    padding:10px 16px;
+    border-radius:999px;
+    background:var(--text);
+    color:#fff;
+  }
+
+  @media(max-width:640px){
+    .resume-modal{
+      padding:12px;
+    }
+    .resume-modal-card{
+      height:88vh;
+    }
+    .resume-terminal{
+      font-size:11.5px;
+      min-height:110px;
+    }
+    .resume-open-btn{
+      width:100%;
+      text-align:center;
+    }
+  }
+
 
   .quick-nav{
     position:relative;z-index:1;display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-bottom:8px;
@@ -313,12 +476,12 @@
       </div>
     </div>
 
-    <a class="cta-pill" href="mailto:naluvalajyoshna25@gmail.com">
-      <span>Let's talk about your data...</span>
+    <button class="cta-pill resume-query-btn" id="resumeQueryBtn" type="button" aria-label="Run resume query and preview resume">
+      <span>Run Resume Query</span>
       <span class="arrow">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </span>
-    </a>
+    </button>
 
     <div class="quick-nav">
       <a href="#experience">
@@ -675,6 +838,41 @@
   </div>
 </footer>
 
+
+<div class="resume-modal" id="resumeModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="resumeModalTitle">
+  <div class="resume-modal-card">
+    <div class="resume-modal-topbar">
+      <div class="modal-dots" aria-hidden="true">
+        <span class="dot dot-r"></span>
+        <span class="dot dot-y"></span>
+        <span class="dot dot-g"></span>
+      </div>
+      <div class="resume-modal-title" id="resumeModalTitle">resume_query.sql</div>
+      <button class="resume-modal-close" id="resumeModalClose" type="button" aria-label="Close resume preview">×</button>
+    </div>
+
+    <div class="resume-modal-body">
+      <div class="resume-terminal">
+        <span id="resumeQueryText"></span><span class="cursor" id="resumeQueryCursor"></span>
+      </div>
+
+      <div class="resume-status" id="resumeStatus">
+        // waiting for query...
+      </div>
+
+      <div class="resume-frame-wrap" id="resumeFrameWrap">
+        <iframe src="" id="resumeFrame" title="Jyoshna Naluvala Resume"></iframe>
+      </div>
+
+      <div class="resume-modal-actions">
+        <a href="resume.pdf" target="_blank" rel="noopener" class="resume-open-btn">
+          Open Resume in New Tab
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   const query = `SELECT name, title, years_experience, core_stack, location
 FROM   analysts
@@ -726,6 +924,89 @@ LIMIT  1;`;
       pixelAvatar.classList.add('pixel-avatar-hairflip');
     }, 5200);
   }
+
+
+  // Resume Query CTA:
+  // When a recruiter clicks the hero CTA, a small SQL-style query runs first,
+  // then resume.pdf opens inside the modal preview.
+  const resumeBtn = document.getElementById('resumeQueryBtn');
+  const resumeModal = document.getElementById('resumeModal');
+  const resumeClose = document.getElementById('resumeModalClose');
+  const resumeQueryText = document.getElementById('resumeQueryText');
+  const resumeQueryCursor = document.getElementById('resumeQueryCursor');
+  const resumeStatus = document.getElementById('resumeStatus');
+  const resumeFrameWrap = document.getElementById('resumeFrameWrap');
+  const resumeFrame = document.getElementById('resumeFrame');
+
+  const resumeQuery = `SELECT resume_link, role, core_stack
+FROM   jyoshna_profile
+WHERE  role = 'Data Analyst'
+  AND  core_stack IN ('SQL','Power BI','Tableau','Python')
+ORDER BY recruiter_fit DESC
+LIMIT  1;`;
+
+  function resetResumeModal(){
+    resumeQueryText.innerHTML = '';
+    resumeStatus.classList.remove('show');
+    resumeStatus.textContent = '// running query...';
+    resumeFrameWrap.classList.remove('show');
+    resumeFrame.src = '';
+    resumeQueryCursor.style.display = 'inline-block';
+  }
+
+  function typeResumeQuery(){
+    let j = 0;
+
+    function typeNext(){
+      if(j <= resumeQuery.length){
+        resumeQueryText.innerHTML = highlight(resumeQuery.slice(0, j));
+        j++;
+        setTimeout(typeNext, 16 + Math.random() * 18);
+      } else {
+        resumeQueryCursor.style.display = 'none';
+        resumeStatus.textContent = '// 1 row returned — opening resume.pdf';
+        resumeStatus.classList.add('show');
+
+        setTimeout(() => {
+          resumeFrame.src = 'resume.pdf';
+          resumeFrameWrap.classList.add('show');
+        }, 650);
+      }
+    }
+
+    typeNext();
+  }
+
+  function closeResumeModal(){
+    resumeModal.classList.remove('show');
+    resumeModal.setAttribute('aria-hidden', 'true');
+    resumeFrame.src = '';
+  }
+
+  if(resumeBtn){
+    resumeBtn.addEventListener('click', () => {
+      resetResumeModal();
+      resumeModal.classList.add('show');
+      resumeModal.setAttribute('aria-hidden', 'false');
+      typeResumeQuery();
+    });
+  }
+
+  if(resumeClose){
+    resumeClose.addEventListener('click', closeResumeModal);
+  }
+
+  resumeModal?.addEventListener('click', (e) => {
+    if(e.target === resumeModal){
+      closeResumeModal();
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape' && resumeModal?.classList.contains('show')){
+      closeResumeModal();
+    }
+  });
 
 </script>
 
