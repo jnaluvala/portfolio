@@ -71,7 +71,65 @@
   h1.name{
     font-family:var(--font-display);font-weight:700;
     font-size:clamp(2.4rem, 6vw, 3.8rem);
-    letter-spacing:-0.02em;margin-bottom:28px;position:relative;z-index:1;
+    letter-spacing:-0.02em;margin-bottom:12px;position:relative;z-index:1;
+  }
+
+  /* HERO VALUE TICKER — slow, clean, no box */
+  .hero-value-ticker{
+    position:relative;
+    z-index:1;
+    max-width:900px;
+    margin:0 auto 30px;
+    overflow:hidden;
+    white-space:nowrap;
+    background:transparent;
+    border:none;
+    box-shadow:none;
+  }
+
+  .hero-value-track{
+    display:flex;
+    align-items:center;
+    width:max-content;
+    gap:64px;
+    padding:2px 0;
+    animation:heroTicker 44s linear infinite;
+    will-change:transform;
+  }
+
+  .hero-value-track span{
+    display:inline-block;
+    font-family:var(--font-body);
+    font-size:clamp(1rem, 2vw, 1.12rem);
+    font-weight:500;
+    letter-spacing:0.01em;
+    color:var(--text-dim);
+  }
+
+  .hero-value-track strong{
+    color:var(--text);
+    font-weight:700;
+  }
+
+  .hero-value-ticker:hover .hero-value-track{
+    animation-play-state:paused;
+  }
+
+  @keyframes heroTicker{
+    from{transform:translateX(0);}
+    to{transform:translateX(calc(-50% - 32px));}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .hero-value-track{
+      animation:none;
+      transform:none;
+      width:auto;
+      white-space:normal;
+    }
+    .hero-value-track span[aria-hidden="true"]{
+      display:none;
+    }
   }
   .headshot-wrap{position:relative;z-index:1;margin-bottom:28px;display:flex;justify-content:center;}
   .headshot{
@@ -463,6 +521,12 @@
     <div class="hero-mark">JN</div>
     <div class="hero-greet">Hey, I'm Jyoshna 👋</div>
     <h1 class="name">Data Analyst</h1>
+    <div class="hero-value-ticker" aria-label="I help stakeholders move from confusion to clarity by showing what changed, why it matters, and what to do next.">
+      <div class="hero-value-track">
+        <span>I help stakeholders move from confusion to clarity by showing <strong>what changed</strong>, why it matters, and what to do next.</span>
+        <span aria-hidden="true">I help stakeholders move from confusion to clarity by showing <strong>what changed</strong>, why it matters, and what to do next.</span>
+      </div>
+    </div>
 
     <div class="headshot-wrap">
       <div class="pixel-avatar-stage">
